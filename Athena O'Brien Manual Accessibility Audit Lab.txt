@@ -1,0 +1,48 @@
+﻿Automated Check: WC3 Validation
+
+
+Findings From Automated Check
+1. An error: “Stray doctype.”
+   1. “<!doctype>” was written in lowercase letters instead of uppercase letters, leading to a perception that the HTML document provided was not valid.
+   2. https://developer.mozilla.org/en-US/docs/Glossary/Doctype According to this MDN article, the <!doctype> tag is case-insensitive. However, VS Code and the W3 flagged this as a syntax error which caused a cascade of errors.
+   3. 12 additional errors being thrown.
+   4. Low priority. Although this error was creating a cascade of multiple errors, none of the errors impacted the functionality of the website. In addition, this is not really an error, because the MDN documentation states that it should not matter. However, it might be confusing if someone attempted to run a performance check on the site.
+   5. Replaced <!doctype> with <!DOCTYPE>.
+   6. All but two of the errors on the page, which are actual accessibility issues, went away, leaving me free to focus on the fixes required to make this page accessible.
+2. An error: “The heading “h3” (with computed level 3) follows the heading “h1” (with computed level 1), skipping 1 heading level.”
+   1. An <h1> at the top of the page was followed by an <h3> instead of an <h2> creating potential confusion for users relying on the page’s outline to direct their focus.
+   2. https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Headings_and_paragraphs According to this MDN article, screen readers “provide an outline of the document by reading out the headings, allowing their users to find the information they need quickly. If headings are not available, they will be forced to listen to the whole document read out loud ”
+   3. Users with screen readers might be confused or frustrated by having to search the entire document just because one heading is out of order.
+   4. High priority. This affects users with screen readers and is an accessibility issue because it causes confusion when those users try to utilize the website.
+   5. Replaced the <h3> with an <h2>.
+   6. The hierarchy error is gone, and the website’s outline reads correctly. The website also looks much more visually pleasing, because the hierarchy is balanced.
+3. An error: axe-linter (button-name): Buttons must have discernible text.
+   1. The submit button for the website’s form was missing text inside of it that indicated it was a submit button.
+   2. https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button This MDN article states, “Buttons that only display an icon do not have an accessible name.” This means that users with screen readers will have difficulty finding, understanding, or using the button in its current state because it is just a blank rectangle. 
+   3. Users with screen readers will be confused or frustrated because it will be difficult to figure out how to submit this form. Other users will also be impacted, because it appears that the button might be broken, nonexistent, or otherwise unusable.
+   4. High priority. Not only is this an accessibility issue that affects users with assistive technology, it also affects regular users, because the nature and purpose of the button is unclear.
+   5. I changed <button type="submit"></button> to <button type="submit">Submit Form</button>
+   6. My HTML file is now valid, and the words “Submit Form” are visible on the form’s button.
+Findings From Manual Check
+
+
+4. Keyboard focus issues
+   1. It is not clear what, if any, parts of this page are receiving keyboard focus, because no outlines appear when users attempt to manually navigate this site.
+   2. https://developer.mozilla.org/en-US/docs/Web/Accessibility/Guides/Understanding_WCAG/Keyboard This MDN article goes into detail about keyboard focus. Buttons, form fields, and links should be outlined or otherwise have an indication that they are being focused on to make it easy for keyboard-only users to navigate the website, but this is not the case.
+   3. Keyboard-only users will face difficulty navigating this website and will not be able to switch to other pages or interact with clickable links.
+   4. High priority. This issue prevents keyboard-only users from accessing and utilizing this website.
+   5. Add tabIndex = “0” property to selectable elements in HTML, and a :focus rule in CSS.
+5. Unclear alt text
+   1. The three images on this website have inconsistent alt text, even though they are decorative images. One says “poster”, one says “people at a conference” and one is empty.
+   2. https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/alt Although this MDN article focuses on the benefits and importance of alt text, we learned that decorative images should not have alt text, because it leads to confusion for those with screen readers.
+   3. The alt text fields for these three images are mismatched, leading to difficulty following the website when the content is read aloud. 
+   4. High priority. Although it does not impact the overall function of the website, it may make the site difficult to navigate for some users.
+   5. The alt text should be emptied, so that all three images have “” as their alt text.
+
+
+Testing Notes: One issue that only an automated tool could catch was the hierarchy issue. The <h3> rendered properly and buried within many lines of code. A quick manual review of the code would not have raised any red flags, because the site was functioning correctly.
+
+One issue that could only be caught manually was the inconsistent alt text. The alt text was syntactically correct, but contained an issue that required human utilization to address.
+
+
+AI Disclosure: I did not use AI to complete this assignment.
